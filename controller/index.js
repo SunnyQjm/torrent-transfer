@@ -6,7 +6,7 @@ bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
 
 const REDIS_PORT = 6379;
-const REDIS_HOST = '127.0.0.10';
+const REDIS_HOST = '127.0.0.1';
 const REDIS_OPTS = {};
 
 let client = redis.createClient(REDIS_PORT, REDIS_HOST, REDIS_OPTS);
