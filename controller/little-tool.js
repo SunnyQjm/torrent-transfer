@@ -26,14 +26,14 @@ const pushWebsite = async ctx => {
     const urlObj = url.parse(website);
     const savePath = path.join(BASE_THUMBNAILS_PATH, urlObj.host);
     const sp = await createWebThumbnails(website, `${savePath}.png`);
-    await getThumbnails(sp, `${savePath}-thumb.png`);
+    await getThumbnails(sp, `${savePath}-thumb.png`, 204, 120);
     ctx.easyResponse.success(sp);
 
     ShareWebsite.create({
         title: title,
         website: website,
         description: description,
-        cover: sp,
+        cover: `${savePath}-thumb.png`,
     });
 };
 
