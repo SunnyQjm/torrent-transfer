@@ -15,6 +15,7 @@ mkdir('static/thumbnails')
     });
 
 const BASE_THUMBNAILS_PATH = 'static/thumbnails';
+const BASE_PATH = 'thumbnails';
 const ShareWebsite = model.ShareWebsite;
 
 const pushWebsite = async ctx => {
@@ -33,7 +34,7 @@ const pushWebsite = async ctx => {
         title: title,
         website: website,
         description: description,
-        cover: `${savePath}-thumb.png`,
+        cover: `${path.join(BASE_PATH, urlObj.hostname)}-thumb.png`,
     });
 };
 
