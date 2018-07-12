@@ -22,22 +22,41 @@ const pushWebsite = async ctx => {
     const {
         title,
         website,
-        description
+        description,
+        categoty,
     } = ctx.request.body;
     const urlObj = url.parse(website);
     const savePath = path.join(BASE_THUMBNAILS_PATH, urlObj.host);
     const sp = await createWebThumbnails(website, `${savePath}.png`);
     await getThumbnails(sp, `${savePath}-thumb.png`, 204, 120);
-    ctx.easyResponse.success(sp);
+    const result = `${path.join(BASE_PATH, urlObj.hostname)}-thumb.png`;
+    ctx.easyResponse.success(result);
 
     ShareWebsite.create({
         title: title,
         website: website,
         description: description,
-        cover: `${path.join(BASE_PATH, urlObj.hostname)}-thumb.png`,
+        cover: result,
+        category: categoty,
     });
 };
 
+const getWebsites = async ctx => {
+    const category = ctx.query.category;
+    console.log(category);
+    let findParams = {
+        where: {
+            category: {
+                $like: `%${category}%`
+            }
+        }
+    };
+    let result = await ShareWebsite.findAll(findParams);
+    ctx.easyResponse.success(result);
+};
+
+
 module.exports = {
     'POST /pushWebsite': pushWebsite,
+    'GET /getWebsite': getWebsites,
 };
