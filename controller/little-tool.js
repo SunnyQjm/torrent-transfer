@@ -1,6 +1,9 @@
 const {
     createWebThumbnails
 } = require('../tool/web-thumbnail-getter');
+const {
+    getThumbnails
+} = require('../tool/image-magick');
 const url = require('url');
 const mkdir = require('make-dir');
 const path = require('path');
@@ -23,6 +26,7 @@ const pushWebsite = async ctx => {
     const urlObj = url.parse(website);
     const savePath = path.join(BASE_THUMBNAILS_PATH, urlObj.host);
     const sp = await createWebThumbnails(website, `${savePath}.png`);
+    await getThumbnails(sp, `${savePath}-thumb.png`);
     ctx.easyResponse.success(sp);
 
     ShareWebsite.create({
