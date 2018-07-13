@@ -27,6 +27,7 @@ function createWebThumbnails(url, savePath) {
                         client.exit();
                     }
                 } catch (e) {
+                    console.log(e);
                     client.exit();
                     reject(e);
                 }

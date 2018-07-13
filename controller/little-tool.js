@@ -41,6 +41,7 @@ const pushWebsite = async ctx => {
             category: category,
         });
     } catch (e) {
+        console.log(e);
         ctx.easyResponse.error(e.message);
     }
 
