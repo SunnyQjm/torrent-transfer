@@ -23,7 +23,7 @@ const pushWebsite = async ctx => {
         title,
         website,
         description,
-        categoty,
+        category,
     } = ctx.request.body;
     const urlObj = url.parse(website);
     const savePath = path.join(BASE_THUMBNAILS_PATH, urlObj.host);
@@ -37,7 +37,7 @@ const pushWebsite = async ctx => {
         website: website,
         description: description,
         cover: result,
-        category: categoty,
+        category: category,
     });
 };
 
