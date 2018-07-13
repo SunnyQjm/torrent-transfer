@@ -49,21 +49,78 @@ const pushWebsite = async ctx => {
 };
 
 const getWebsites = async ctx => {
-    const category = ctx.query.category;
-    console.log(category);
+    const page = +ctx.query.page || 1,          //页数
+        size = +ctx.query.size || 10,           //每页的数量
+        orderProp = ctx.query.orderProp,        //排序的属性
+        order = ctx.query.order || 'ASC',       //排序方式。 ASC=>升序，DESC=>降序
+        category = ctx.query.category;
     let findParams = {
         where: {
             category: {
                 $like: `%${category}%`
             }
-        }
+        },
     };
+
+    //如果需要分页，就添加分页功能
+    if(page){
+        findParams.offset = (page - 1) * size;
+        findParams.limit = size;
+    }
+
+    //排序功能
+    if (orderProp && (order === 'ASC' || order === 'DESC')) {
+        findParams.order = [
+            [orderProp, order]
+        ];
+    }
     let result = await ShareWebsite.findAll(findParams);
     ctx.easyResponse.success(result);
 };
 
 
+const queryShareWebsite = async ctx => {
+    const page = +ctx.query.page || 1,          //页数
+        size = +ctx.query.size || 10,           //每页的数量
+        orderProp = ctx.query.orderProp,        //排序的属性
+        order = ctx.query.order || 'ASC',       //排序方式。 ASC=>升序，DESC=>降序
+        keywords = ctx.query.keywords;
+    let findParams = {
+        where: {
+            $or: {
+                title: {
+                    $like: `%${keywords}%`
+                },
+                description: {
+                    $like: `%${keywords}%`
+                }
+            }
+        },
+    };
+
+    //如果需要分页，就添加分页功能
+    if(page){
+        findParams.offset = (page - 1) * size;
+        findParams.limit = size;
+    }
+
+    //排序功能
+    if (orderProp && (order === 'ASC' || order === 'DESC')) {
+        findParams.order = [
+            [orderProp, order]
+        ];
+    }
+
+    try {
+        let result = await ShareWebsite.findAll(findParams);
+        ctx.easyResponse.success(result);
+    } catch (e) {
+        ctx.easyResponse.error(e.message);
+    }
+};
+
 module.exports = {
     'POST /pushWebsite': pushWebsite,
     'GET /getWebsite': getWebsites,
+    'GET /queryShareWebsite': queryShareWebsite,
 };
