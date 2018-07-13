@@ -20,16 +20,18 @@ function createWebThumbnails(url, savePath) {
                         setTimeout(async () => {
                             await page.render(savePath);
                             resolve(savePath);
+                            client.exit();
                         }, 1000)
                     } else {
                         reject(status);
+                        client.exit();
                     }
                 } catch (e) {
+                    client.exit();
                     reject(e);
                 }
             })
             .catch(reject);
-        client.exit();
     });
 }
 
