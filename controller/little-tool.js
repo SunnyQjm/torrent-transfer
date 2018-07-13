@@ -28,18 +28,23 @@ const pushWebsite = async ctx => {
     const urlObj = url.parse(website);
     console.log(website);
     const savePath = path.join(BASE_THUMBNAILS_PATH, urlObj.host);
-    const sp = await createWebThumbnails(website, `${savePath}.png`);
-    await getThumbnails(sp, `${savePath}-thumb.png`, 204, 120);
-    const result = `${path.join(BASE_PATH, urlObj.hostname)}-thumb.png`;
-    ctx.easyResponse.success(result);
+    try{
+        const sp = await createWebThumbnails(website, `${savePath}.png`);
+        await getThumbnails(sp, `${savePath}-thumb.png`, 204, 120);
+        const result = `${path.join(BASE_PATH, urlObj.hostname)}-thumb.png`;
+        ctx.easyResponse.success(result);
+        ShareWebsite.create({
+            title: title,
+            website: website,
+            description: description,
+            cover: result,
+            category: category,
+        });
+    } catch (e) {
+        ctx.easyResponse.error(e.message);
+    }
 
-    ShareWebsite.create({
-        title: title,
-        website: website,
-        description: description,
-        cover: result,
-        category: category,
-    });
+
 };
 
 const getWebsites = async ctx => {

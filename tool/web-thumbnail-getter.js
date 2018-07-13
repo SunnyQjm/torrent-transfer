@@ -29,7 +29,7 @@ function createWebThumbnails(url, savePath) {
                 }
             })
             .catch(reject);
-        client.exists();
+        client.exit();
     });
 }
 
