@@ -49,7 +49,7 @@ const pushWebsite = async ctx => {
 };
 
 const getWebsites = async ctx => {
-    const page = +ctx.query.page || 1,          //页数
+    const page = +ctx.query.page,          //页数
         size = +ctx.query.size || 10,           //每页的数量
         orderProp = ctx.query.orderProp,        //排序的属性
         order = ctx.query.order || 'ASC',       //排序方式。 ASC=>升序，DESC=>降序
@@ -80,7 +80,7 @@ const getWebsites = async ctx => {
 
 
 const queryShareWebsite = async ctx => {
-    const page = +ctx.query.page || 1,          //页数
+    const page = +ctx.query.page,          //页数
         size = +ctx.query.size || 10,           //每页的数量
         orderProp = ctx.query.orderProp,        //排序的属性
         order = ctx.query.order || 'ASC',       //排序方式。 ASC=>升序，DESC=>降序
