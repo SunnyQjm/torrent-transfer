@@ -7,6 +7,7 @@ const controller = require('./controllers');
 const app = new Koa();
 
 combineMiddleWare(app, __dirname);
+
 app.use(cors());
 app.use(bodyParser());
 app.use(controller());

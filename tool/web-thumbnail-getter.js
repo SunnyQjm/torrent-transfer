@@ -37,7 +37,6 @@ function createWebThumbnails(url, savePath) {
     });
 }
 
-createWebThumbnails("https://qjm253.cn", 'qjm23.cn');
 module.exports = {
     createWebThumbnails,
 };

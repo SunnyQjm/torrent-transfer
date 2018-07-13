@@ -26,6 +26,7 @@ const pushWebsite = async ctx => {
         category,
     } = ctx.request.body;
     const urlObj = url.parse(website);
+    console.log(website);
     const savePath = path.join(BASE_THUMBNAILS_PATH, urlObj.host);
     const sp = await createWebThumbnails(website, `${savePath}.png`);
     await getThumbnails(sp, `${savePath}-thumb.png`, 204, 120);
