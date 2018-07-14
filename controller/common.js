@@ -52,5 +52,4 @@ const powerQueryResource = async ctx => {
 
 module.exports = {
     'GET /queryResource': powerQueryResource,
-
-}
+};
