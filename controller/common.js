@@ -44,6 +44,7 @@ const powerQueryResource = async ctx => {
         let result = await Movie.findAll(findParams);
         ctx.easyResponse.success(result);
     } catch (e) {
+        console.log(e);
         ctx.easyResponse.error(e.message);
     }
 };
